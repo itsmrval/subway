@@ -1,0 +1,24 @@
+name: deploy
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  déployer:
+    runs-on: self-hosted
+
+    steps:
+      - name: extract
+        run: |
+          tag_name=${GITHUB_REF##refs/tags/}
+          echo "tag $tag_name"
+
+      - name: download
+        uses: actions/checkout@v3
+
+
+      - name:
+        run: |
+          cp -r . /var/www/content
