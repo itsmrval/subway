@@ -1,5 +1,14 @@
 <?php
-include 'services/stop_service.php';
+
+function getStops($line) {
+    $json = file_get_contents(__DIR__ . '/../../data/stops.json');
+    $data = json_decode($json, true);
+    $result = array_filter($data, function($item) use ($line) {
+        return $item['fields']['mode'] === 'METRO' && $item['fields']['indice_lig'] === "$line";
+    });
+    return $result;
+}   
+
 ?>
 
 <h2>Lignes de Métro</h2>
@@ -20,7 +29,6 @@ include 'services/stop_service.php';
                                 </div>
                                 <div class="modal-body">
                                     <?php
-                                    $stops = getStops($i);
                                     include 'components/navigate/stop_list.php';
                                     ?>
                                 </div>

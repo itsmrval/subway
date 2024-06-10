@@ -1,6 +1,8 @@
 <div class="row">
     <?php
-    $stations = array_fill(1, 10, 'Station');
+    
+    $stations = getStops($i);
+
     $half = ceil(count($stations) / 2);
     $chunks = array_chunk($stations, ceil(count($stations) / 2), true);
     ?>
@@ -17,8 +19,8 @@
                 <tbody>
                 <?php foreach ($chunk as $station): ?>
                     <tr>
-                        <td><?php echo $station; ?></td>
-                        <td class="text-end"><div class="btn btn-success">Ajouter</div></td>
+                        <td><?php echo htmlspecialchars($station['fields']['nom_zda']); ?></td>
+                        <td class="text-end"><button class="btn btn-success">Ajouter</button></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
