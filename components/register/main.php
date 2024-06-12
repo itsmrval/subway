@@ -1,5 +1,6 @@
 <?php
 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($_POST['password'] !== $_POST['confirmPassword']) {
@@ -12,6 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($user) {
             $errorMessage = "Email already used.";
+        }
+
+        if (!isset($errorMessage)) {
+            $query = $conn->prepare("INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)");
+            $query->bindParam(':firstName', $_POST['firstName']);
+            $query->bindParam(':lastName', $_POST['lastName']);
+            $query->bindParam(':email', $_POST['email']);
+            $query->bindParam(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
+            $query->execute();
+
+            header("Location: login.php");
+            exit();
         }
     }
 
