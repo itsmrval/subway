@@ -3,16 +3,21 @@
         <thead>
             <tr>
                 <th>Direction</th>
-                <th>Prochain départ</th>
-                <th>Prochain suivant</th>
+                <th>Next train</th>
+                <th>Following departure</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($directions as $direction): ?>
+            <?php 
+            if (empty($finalDirections)) {
+                echo '<tr><td colspan="3">This train no longer takes passengers</td></tr>';
+            }
+            foreach ($finalDirections as $direction): 
+            ?>
             <tr>
-                <td><?php echo $direction['direction']; ?></td>
-                <td><?php echo $direction['next_departure']; ?></td>
-                <td><?php echo $direction['following_departure']; ?></td>
+                <td><?php echo htmlspecialchars($direction['direction']); ?></td>
+                <td><?php echo htmlspecialchars($direction['next_departure']); ?></td>
+                <td><?php echo htmlspecialchars($direction['following_departure']); ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

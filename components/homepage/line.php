@@ -1,9 +1,20 @@
-<div>
-    <img src="/assets/lines/m.svg" width="64px" class="img-fluid mb-3">
-    <img src="/assets/lines/<?php echo $line; ?>.svg" width="64px" class="img-fluid mb-3">
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex align-items-center">
+            <img src="/assets/lines/m.svg" width="64px" class="img-fluid mb-3">&nbsp;&nbsp;
+            <img src="/assets/lines/<?php echo $lineId; ?>.svg" width="64px" class="img-fluid mb-3">
+        </div>
 
-    <?php
-        $stop_name = "Champs elysées";
-        include 'components/homepage/stop.php';
-    ?>
+        <?php
+        $favoriteStops = getFavorites($lineId);
+    
+        foreach ($favoriteStops as $stop) {
+            $stop_name = getStopName($stop['stopId']);
+            include 'components/homepage/stop.php';
+            if (count($favoriteStops) > 1) {
+                echo '<hr class="mt-4">';
+            }
+        }
+        ?>
+    </div>
 </div>
