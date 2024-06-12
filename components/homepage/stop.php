@@ -40,12 +40,13 @@ foreach ($directions as $direction => $times) {
         ];
     } elseif (count($times) == 1) {
         $finalDirections[] = [
-            'direction' => $times[0],
+            'direction' => $direction,
             'next_departure' => $times[0],
             'following_departure' => '-'
         ];
     }
 }
+
 ?>
 
 <div>
