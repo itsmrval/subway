@@ -1,5 +1,6 @@
 <?php
 session_start();
+include '../config.php';
 include '../services/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['stopId'], $_POST['lineId'], $_POST['action'])) {
