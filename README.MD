@@ -1,7 +1,7 @@
 <br />
 <div id="readme-top" align="center">
   <a href="https://github.com/itsmrval/subway">
-    <img src="https://raw.githubusercontent.com/itsmrval/subway/main/assets/logo/dark.png" alt="Logo" width="164">
+    <img src="https://raw.githubusercontent.com/itsmrval/subway/main/public/assets/logo/dark.png" alt="Logo" width="164">
   </a>
 
   <h3 align="center">Subway Schedule</h3>
@@ -69,7 +69,7 @@ Then, create a user with a database
 	* idfm_api_key with your [IDFM PRIM account](https://prim.iledefrance-mobilites.fr)
 	* db_host / db_user / db_password / db_name with mysql infos.
 	
-6. Run your nginx server
+6. Run your nginx server on `/public` directory
   
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
