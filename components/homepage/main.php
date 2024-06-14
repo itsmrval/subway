@@ -29,7 +29,7 @@ $lineIds = $query->fetchAll(PDO::FETCH_COLUMN);
 ?>
 
 <div class="px-4 my-5 text-center">
-    <h1 class="display-5 fw-bold">Subway Schedule</h1>
+    <h1 class="display-5 fw-bold">Subways</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">Displaying your favorite stations and lines below</p>
       
@@ -45,7 +45,6 @@ if (empty($lineIds)) {
     echo '<div class="alert alert-info text-center" role="alert">You havent added any favorites yet.</div>';
 }
 ?>
-
 
 <script>
 function removeFavorite(stopId, lineId) {

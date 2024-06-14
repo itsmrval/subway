@@ -15,14 +15,23 @@ try {
     )");
 
     $conn->exec("CREATE TABLE IF NOT EXISTS favorites (
-        id INT AUTO_INCREMENT PRIMARY KEY,
         userId INT NOT NULL,
         stopId INT NOT NULL,
         lineId INT NOT NULL,
         FOREIGN KEY (userId) REFERENCES users(id)
     )");
 
+    $conn->exec("CREATE TABLE IF NOT EXISTS logs (
+        userId INT NOT NULL,
+        date DATETIME NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users(id)
+    )");
 
+    $conn->exec("CREATE TABLE IF NOT EXISTS stops (
+        id INT NOT NULL PRIMARY KEY,
+        lineId INT NOT NULL,
+        name VARCHAR(255) NOT NULL
+    )");
 
 } catch(PDOException $e) {
     echo "Connection failed: " . $e->getMessage();

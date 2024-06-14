@@ -1,12 +1,10 @@
 <?php
 
-function getStops($line) {
-    $json = file_get_contents(__DIR__ . '/../../data/stops.json');
-    $data = json_decode($json, true);
-    $result = array_filter($data, function($item) use ($line) {
-        return $item['fields']['mode'] === 'METRO' && $item['fields']['indice_lig'] === "$line";
-    });
-    return $result;
+function getStops($lineId) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM stops WHERE lineId = ?");
+    $stmt->execute([$lineId]);
+    return $stmt->fetchAll();
 }
 
 function isFavorite($userId, $stopId, $lineId) {
@@ -15,6 +13,7 @@ function isFavorite($userId, $stopId, $lineId) {
     $stmt->execute([$userId, $stopId, $lineId]);
     return $stmt->rowCount() > 0;
 }
+
 
 ?>
 
@@ -29,7 +28,11 @@ function isFavorite($userId, $stopId, $lineId) {
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <?php for ($i = 1; $i <= 14; $i++): ?>
+            <?php 
+            for ($i = 1; $i <= 14; $i++): 
+                $stops = getStops($i);
+                if (!empty($stops)):
+            ?>
                 <div class="col-2 mb-3">
                     <div class="card h-100">
                         <div class="card-body">
@@ -44,9 +47,12 @@ function isFavorite($userId, $stopId, $lineId) {
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <?php $stations = getStops($i); ?>
                                             <div class="row">
-                                                <?php include 'stop_list.php'; ?>
+                                                <?php 
+                                                $stops = getStops($i);
+                                                include 'stop_list.php';
+                            
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +64,7 @@ function isFavorite($userId, $stopId, $lineId) {
                 <?php if ($i % 6 === 0): ?>
                     </div><div class="row">
                 <?php endif; ?>
-            <?php endfor; ?>
+            <?php endif; endfor; ?>
         </div>
     </div>
 </div>
