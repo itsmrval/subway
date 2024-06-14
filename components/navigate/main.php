@@ -46,7 +46,7 @@ function isFavorite($userId, $stopId, $lineId) {
                                         <div class="modal-body">
                                             <?php $stations = getStops($i); ?>
                                             <div class="row">
-                                                <?php include 'components/navigate/stop_list.php'; ?>
+                                                <?php include 'stop_list.php'; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var action = this.classList.contains('add-stop') ? 'add' : 'remove';
             var buttonElement = this;
 
-            fetch('/endpoints/updateFavorite.php', {
+            fetch('/updateFavorite.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

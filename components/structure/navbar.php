@@ -17,7 +17,7 @@
               <a class="nav-link <?php echo ($_SERVER['REQUEST_URI'] == '/navigate.php') ? 'active' : ''; ?>" href="/navigate.php">Discover</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Account</a>
+            <a class="nav-link <?php echo ($_SERVER['REQUEST_URI'] == '/account.php') ? 'active' : ''; ?>" href="/account.php">Account</a>
             </li>
           </ul>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -26,7 +26,9 @@
             </li>
           </ul>
           <div class="d-flex">
-            <a class="btn btn-primary" href="#">Admin</a>
+              <?php if(isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                  <a class="btn btn-primary" href="/admin.php">Admin</a>
+              <?php endif; ?>
           </div>
         </div>
       </div>

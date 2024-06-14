@@ -1,7 +1,7 @@
 <?php 
 session_start();
 
-include 'config.php';
+include __DIR__ . '/../../config.php';
 
 $page = basename($_SERVER['PHP_SELF']);
 if (!isset($_SESSION['user_id']) && $page !== 'login.php' && $page !== 'register.php') {
@@ -12,9 +12,9 @@ if (!isset($_SESSION['user_id']) && $page !== 'login.php' && $page !== 'register
     exit();
 }
 
-include 'structure/header.php'; 
-include 'structure/navbar.php'; 
-include 'services/db.php'; 
+include 'header.php'; 
+include 'navbar.php'; 
+include __DIR__ . '/../../services/db.php'; 
     
 ?>
 
@@ -22,7 +22,7 @@ include 'services/db.php';
     <?php include $content; ?>
 </main>
 
-<?php include 'structure/footer.php'; ?>
+<?php include 'footer.php'; ?>
 
 <script>
     window.addEventListener('load', function() {

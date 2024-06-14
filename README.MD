@@ -23,7 +23,7 @@
 
 <img src="https://i.imgur.com/ZjLkOIR.png" width="500px">
 
-
+Note: This app is not intended for production use, but for personal or educational purposes.
 
 ### Built With
 

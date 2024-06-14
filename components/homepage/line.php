@@ -10,7 +10,7 @@
     
         foreach ($favoriteStops as $stop) {
             $stop_name = getStopName($stop['stopId']);
-            include 'components/homepage/stop.php';
+            include 'stop.php';
             if (count($favoriteStops) > 1) {
                 echo '<hr class="mt-4">';
             }

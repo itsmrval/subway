@@ -1,7 +1,7 @@
 <?php
 session_start();
-include '../config.php';
-include '../services/db.php';
+include __DIR__ . '/../config.php';
+include __DIR__ . '/../services/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['stopId'], $_POST['lineId'], $_POST['action'])) {
     $userId = $_SESSION['user_id'];

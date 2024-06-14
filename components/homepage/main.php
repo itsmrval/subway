@@ -38,7 +38,7 @@ $lineIds = $query->fetchAll(PDO::FETCH_COLUMN);
 
 <?php
 foreach ($lineIds as $lineId) {
-    include 'components/homepage/line.php';
+    include 'line.php';
 }
 
 if (empty($lineIds)) {
@@ -55,7 +55,7 @@ function removeFavorite(stopId, lineId) {
     formData.append('lineId', lineId);
     formData.append('action', 'remove');
 
-    fetch('/endpoints/updateFavorite.php', {
+    fetch('/updateFavorite.php', {
         method: 'POST',
         body: formData
     })
