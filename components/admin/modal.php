@@ -25,6 +25,10 @@
                             <input type="password" class="form-control" id="editPassword" name="password">
                             <small class="form-text text-muted">Leave blank if you do not want to change the password</small>
                         </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="editIsAdmin" name="is_admin">
+                            <label class="form-label" for="editIsAdmin">Admin role</label>
+                        </div>
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>

@@ -16,14 +16,23 @@
                     <td><?php echo htmlspecialchars($user['firstName']); ?></td>
                     <td><?php echo htmlspecialchars($user['lastName']); ?></td>
                     <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal"
-                                data-id="<?php echo htmlspecialchars($user['id']); ?>"
-                                data-email="<?php echo htmlspecialchars($user['email']); ?>"
-                                data-firstname="<?php echo htmlspecialchars($user['firstName']); ?>"
-                                data-lastname="<?php echo htmlspecialchars($user['lastName']); ?>">
-                            Edit
-                        </button>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#editUserModal"
+                                    data-id="<?php echo htmlspecialchars($user['id']); ?>"
+                                    data-email="<?php echo htmlspecialchars($user['email']); ?>"
+                                    data-firstname="<?php echo htmlspecialchars($user['firstName']); ?>"
+                                    data-lastname="<?php echo htmlspecialchars($user['lastName']); ?>"
+                                    data-isadmin="<?php echo htmlspecialchars($user['is_admin']); ?>"
+                                    >
+                                Edit
+                            </button>
+                            <form method="POST" action="">
+                                <input type="hidden" name="userId" value="<?php echo htmlspecialchars($user['id']); ?>">
+                                <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
                     </td>
+                </tr>
                 </tr>
                 <?php endforeach; ?>
             </tbody>

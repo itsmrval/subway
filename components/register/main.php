@@ -1,30 +1,40 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if ($_POST['password'] !== $_POST['confirmPassword']) {
-        $errorMessage = "Password doesnt match";
-    } else {
-        $query = $conn->prepare("SELECT * FROM users WHERE email = :email");
+  if ($_POST['password'] !== $_POST['confirmPassword']) {
+    $errorMessage = "Password doesnt match";
+  } else {
+    $query = $conn->prepare("SELECT * FROM users WHERE email = :email");
+    $query->bindParam(':email', $_POST['email']);
+    $query->execute();
+    $user = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+      $errorMessage = "Email already used.";
+    }
+
+    if (!isset($errorMessage)) {
+      $query = $conn->prepare("INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)");
+      $query->bindParam(':firstName', $_POST['firstName']);
+      $query->bindParam(':lastName', $_POST['lastName']);
+      $query->bindParam(':email', $_POST['email']);
+      $query->bindParam(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
+      $query->execute();
+
+      $query = $conn->prepare("SELECT COUNT(*) as count FROM users");
+      $query->execute();
+      $result = $query->fetch(PDO::FETCH_ASSOC);
+
+      if ($result['count'] == 1) {
+        $query = $conn->prepare("UPDATE users SET is_admin = 1 WHERE email = :email");
         $query->bindParam(':email', $_POST['email']);
         $query->execute();
-        $user = $query->fetch(PDO::FETCH_ASSOC);
+      }
 
-        if ($user) {
-            $errorMessage = "Email already used.";
-        }
-
-        if (!isset($errorMessage)) {
-            $query = $conn->prepare("INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)");
-            $query->bindParam(':firstName', $_POST['firstName']);
-            $query->bindParam(':lastName', $_POST['lastName']);
-            $query->bindParam(':email', $_POST['email']);
-            $query->bindParam(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
-            $query->execute();
-
-            header("Location: login.php");
-            exit();
-        }
+      header("Location: login.php");
+      exit();
     }
+  }
 
 }
 ?>
