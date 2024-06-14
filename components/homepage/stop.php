@@ -13,7 +13,7 @@ $directions = [];
 if (isset($data['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit'])) {
     foreach ($data['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit'] as $visit) {
         $vehicleJourney = $visit['MonitoredVehicleJourney'];
-        if (strpos($vehicleJourney['OperatorRef']['value'], '.' . $lineId . '.' . $lineId) !== false) {
+        if (isset($vehicleJourney['MonitoredCall']['ExpectedArrivalTime'])) {
             $direction = $vehicleJourney['DirectionName'][0]['value'];
             $expectedArrival = $vehicleJourney['MonitoredCall']['ExpectedArrivalTime'];
             $expectedDeparture = $vehicleJourney['MonitoredCall']['ExpectedDepartureTime'];

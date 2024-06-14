@@ -28,7 +28,8 @@ try {
     )");
 
     $conn->exec("CREATE TABLE IF NOT EXISTS stops (
-        id INT NOT NULL PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        stopId INT NOT NULL,
         lineId INT NOT NULL,
         name VARCHAR(255) NOT NULL
     )");

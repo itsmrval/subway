@@ -16,34 +16,6 @@ function getUsers() {
     }
 }
 
-function updateUserDetails($userId, $email, $firstName, $lastName, $is_admin, $password = null) {
-    global $conn;
-    try {
-        if ($password) {
-            $query = $conn->prepare("UPDATE users SET email = ?, firstName = ?, lastName = ?, password = ?, is_admin = ? WHERE id = ?");
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $query->execute([$email, $firstName, $lastName, $hashedPassword, $is_admin, $userId]);
-        } else {
-            $query = $conn->prepare("UPDATE users SET email = ?, firstName = ?, lastName = ?, is_admin = ? WHERE id = ?");
-            $query->execute([$email, $firstName, $lastName, $is_admin, $userId]);
-        }
-        return true;
-    } catch(PDOException $e) {
-        return false;
-    }
-}
-
-function deleteUser($userId) {
-    global $conn;
-    try {
-        $query = $conn->prepare("DELETE FROM users WHERE id = ?");
-        $query->execute([$userId]);
-        return true;
-    } catch(PDOException $e) {
-        return false;
-    }
-}
-
 $users = getUsers();
 
 include 'post.php';
@@ -56,6 +28,9 @@ include 'post.php';
         unset($_SESSION['message']);
         ?>
         <h2 class="mb-4">Administration</h2>
+        <form method="POST">
+            <button type="submit" name="refreshData" class="btn btn-primary">Refresh Data</button>
+        </form>
         <?php include 'users_list.php'; ?>
     </div>
 
