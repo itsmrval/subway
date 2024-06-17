@@ -14,25 +14,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!isset($errorMessage)) {
-      $query = $conn->prepare("INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)");
-      $query->bindParam(':firstName', $_POST['firstName']);
-      $query->bindParam(':lastName', $_POST['lastName']);
-      $query->bindParam(':email', $_POST['email']);
-      $query->bindParam(':password', password_hash($_POST['password'], PASSWORD_DEFAULT));
-      $query->execute();
-
-      $query = $conn->prepare("SELECT COUNT(*) as count FROM users");
-      $query->execute();
-      $result = $query->fetch(PDO::FETCH_ASSOC);
-
-      if ($result['count'] == 1) {
-        $query = $conn->prepare("UPDATE users SET is_admin = 1 WHERE email = :email");
+      try {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $query = $conn->prepare("INSERT INTO users (firstName, lastName, email, password) VALUES (:firstName, :lastName, :email, :password)");
+        $query->bindParam(':firstName', $_POST['firstName']);
+        $query->bindParam(':lastName', $_POST['lastName']);
         $query->bindParam(':email', $_POST['email']);
+        $query->bindParam(':password', $password);
         $query->execute();
-      }
 
-      header("Location: login.php");
-      exit();
+        $query = $conn->prepare("SELECT COUNT(*) as count FROM users");
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+
+        if ($result['count'] == 1) {
+          $query = $conn->prepare("UPDATE users SET is_admin = 1 WHERE email = :email");
+          $query->bindParam(':email', $_POST['email']);
+          $query->execute();
+        }
+
+        header("Location: login.php");
+        exit();
+      } catch (PDOException $e) {
+        $errorMessage = "Please fill correct values";
+      }
     }
   }
 
