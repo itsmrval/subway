@@ -12,10 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $_SESSION['first_name'] = $user['first_name'];
     $_SESSION['is_admin'] = $user['is_admin'];
     header("Location: /");
-
-    $log = $conn->prepare("INSERT INTO logs (userId, date) VALUES (:userId, :date)");
+    
+    $log = $conn->prepare("INSERT INTO logs (userId, date, ip) VALUES (:userId, :date, :ip)");
     $log->bindParam(':userId', $user['id']);
     $log->bindParam(':date', date('Y-m-d-H-i-s'));
+    $log->bindParam(':ip', $_SERVER['REMOTE_ADDR']);
     $log->execute();
   } else {
     $errorMessage = "Invalid email or password.";

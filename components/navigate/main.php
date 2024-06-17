@@ -91,11 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (action === 'add') {
                         buttonElement.classList.remove('add-stop', 'btn-success');
                         buttonElement.classList.add('remove-stop', 'btn-danger');
-                        buttonElement.textContent = 'Retirer';
+                        buttonElement.textContent = 'Revoke';
                     } else {
                         buttonElement.classList.remove('remove-stop', 'btn-danger');
                         buttonElement.classList.add('add-stop', 'btn-success');
-                        buttonElement.textContent = 'Ajouter';
+                        buttonElement.textContent = 'Add';
                     }
                     buttonElement.removeEventListener('click', arguments.callee);
                     buttonElement.addEventListener('click', arguments.callee);

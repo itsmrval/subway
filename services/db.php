@@ -24,6 +24,7 @@ try {
     $conn->exec("CREATE TABLE IF NOT EXISTS logs (
         userId INT NOT NULL,
         date DATETIME NOT NULL,
+        ip VARCHAR(255) NOT NULL,
         FOREIGN KEY (userId) REFERENCES users(id)
     )");
 

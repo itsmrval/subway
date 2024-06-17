@@ -48,9 +48,9 @@ $userDetails = getUserDetails($_SESSION['user_id']);
     <?php
         echo $_SESSION['message'] ?? '';
         unset($_SESSION['message']);
-        ?>
-        <h2 class="mb-4">Edit Account</h2>
-        <form method="POST" action="">
+    ?>
+    <h2 class="mb-4">Edit Account</h2>
+    <form method="POST" action="">
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($userDetails['email']); ?>" placeholder="Enter your email" required>
@@ -69,5 +69,28 @@ $userDetails = getUserDetails($_SESSION['user_id']);
                 <small class="form-text text-muted">Leave blank if you do not want to change the password</small>
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
-        </form>
-    </div>
+    </form>
+</div>
+<?php
+$query = $conn->prepare("SELECT logs.ip, logs.date, users.email FROM logs JOIN users ON logs.userId = users.id");
+$query->execute();
+$logDetails = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>IP</th>
+            <th>Date</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($logDetails as $log): ?>
+            <tr>
+                <td><?php echo $log['ip']; ?></td>
+                <td><?php echo $log['date']; ?></td>
+                <td><?php echo $log['email']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

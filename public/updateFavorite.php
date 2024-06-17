@@ -11,11 +11,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['stopId'], $_POST['lin
 
     try {
         if ($action === 'add') {
-            $stmt = $conn->prepare("INSERT INTO favorites (userId, stopId, lineId) VALUES (?, ?, ?)");
-            $stmt->execute([$userId, $stopId, $lineId]);
+            $query = $conn->prepare("SELECT * FROM favorites WHERE userId = ? AND stopId = ? AND lineId = ?");
+            $query->execute([$userId, $stopId, $lineId]);
+            $existingFavorite = $query->fetch();
+
+            if (!$existingFavorite) {
+                $query = $conn->prepare("INSERT INTO favorites (userId, stopId, lineId) VALUES (?, ?, ?)");
+                $query->execute([$userId, $stopId, $lineId]);
+            }
         } elseif ($action === 'remove') {
-            $stmt = $conn->prepare("DELETE FROM favorites WHERE userId = ? AND stopId = ? AND lineId = ?");
-            $stmt->execute([$userId, $stopId, $lineId]);
+            $query = $conn->prepare("DELETE FROM favorites WHERE userId = ? AND stopId = ? AND lineId = ?");
+            $query->execute([$userId, $stopId, $lineId]);
         }
         echo json_encode(['success' => true]);
     } catch (PDOException $e) {

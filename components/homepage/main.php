@@ -26,6 +26,8 @@ $query = $conn->prepare("SELECT DISTINCT lineId FROM favorites WHERE userId = ?"
 $query->execute([$_SESSION['user_id']]);
 $lineIds = $query->fetchAll(PDO::FETCH_COLUMN);
 
+echo $_SERVER['REMOTE_ADDR'];
+
 ?>
 
 <div class="px-4 my-5 text-center">
