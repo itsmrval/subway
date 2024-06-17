@@ -11,7 +11,10 @@ try {
         lastName VARCHAR(50) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
-        is_admin BOOLEAN NOT NULL DEFAULT 0
+        is_admin BOOLEAN NOT NULL DEFAULT 0,
+        CHECK (LENGTH(firstName) >= 2),
+        CHECK (LENGTH(lastName) >= 2),
+        CHECK (email REGEXP '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
     )");
 
     $conn->exec("CREATE TABLE IF NOT EXISTS favorites (
