@@ -74,7 +74,9 @@ Then, create a user with a database
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Known issues 
 
+- Some stations with RER A doesnt display timetables
 
 
 ## License
