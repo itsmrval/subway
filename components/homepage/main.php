@@ -8,12 +8,11 @@ function getStopName($stopId) {
         
     return reset($result)['fields']['nom_zda'];
 }
-
 function getFavorites($lineId) {
     global $conn;
     try {
-        $query = $conn->prepare("SELECT stopId FROM favorites WHERE lineId = ?");
-        $query->execute([$lineId]);
+        $query = $conn->prepare("SELECT stopId FROM favorites WHERE lineId = ? AND userId = ?");
+        $query->execute([$lineId, $_SESSION['user_id']]);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         
         return $result;
