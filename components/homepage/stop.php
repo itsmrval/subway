@@ -13,18 +13,22 @@ $directions = [];
 if (isset($data['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit'])) {
     foreach ($data['Siri']['ServiceDelivery']['StopMonitoringDelivery'][0]['MonitoredStopVisit'] as $visit) {
         $vehicleJourney = $visit['MonitoredVehicleJourney'];
-        if (isset($vehicleJourney['MonitoredCall']['ExpectedArrivalTime'])) {
-            $direction = $vehicleJourney['DirectionName'][0]['value'];
-            $expectedArrival = $vehicleJourney['MonitoredCall']['ExpectedArrivalTime'];
-            $expectedDeparture = $vehicleJourney['MonitoredCall']['ExpectedDepartureTime'];
-            
-            $departureTime = date('H:i', strtotime($expectedArrival . ' +2 hours'));
+        if (strpos($vehicleJourney['OperatorRef']['value'], '.' . $lineId . '.' . $lineId . ':')) {
+            if (isset($vehicleJourney['MonitoredCall']['ExpectedDepartureTime'])) {
+                $direction = $vehicleJourney['DestinationName'][0]['value'];
+                $expectedDeparture = $vehicleJourney['MonitoredCall']['ExpectedDepartureTime'];
+                
+                $departureTime = date('H:i', strtotime($expectedDeparture . ' +2 hours'));
+                $currentTime = date('H:i', strtotime('now' . ' +2 hours'));
 
-            if (!isset($directions[$direction])) {
-                $directions[$direction] = [];
-            }
-            if (count($directions[$direction]) < 2) {
-                $directions[$direction][] = $departureTime;
+                if ($departureTime > $currentTime) {
+                    if (!isset($directions[$direction])) {
+                        $directions[$direction] = [];
+                    }
+                    if (count($directions[$direction]) < 2) {
+                        $directions[$direction][] = $departureTime;
+                    }
+                }
             }
         }
     }

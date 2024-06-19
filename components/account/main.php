@@ -71,10 +71,21 @@ $userDetails = getUserDetails($_SESSION['user_id']);
             <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
 </div>
+
+
 <?php
-$query = $conn->prepare("SELECT logs.ip, logs.date, users.email FROM logs JOIN users ON logs.userId = users.id");
-$query->execute();
-$logDetails = $query->fetchAll(PDO::FETCH_ASSOC);
+function getUserLogs($userId) {
+    global $conn;
+    try {
+        $query = $conn->prepare("SELECT logs.ip, logs.date, users.email FROM logs JOIN users ON logs.userId = users.id WHERE logs.userId = ?");
+        $query->execute([$userId]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    } catch(PDOException $e) {
+        return [];
+    }
+}
+
+$logDetails = getUserLogs($_SESSION['user_id']);
 ?>
 <table class="table mt-4">
     <thead>
