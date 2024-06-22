@@ -30,7 +30,7 @@ Note: This app is not intended for production use, but for personal or education
 This section list major frameworks/libraries used
 
 * ![](https://img.shields.io/badge/php-20232A?style=for-the-badge&logo=php)
-* ![](https://img.shields.io/badge/SqLite-20232A?style=for-the-badge&logo=mysql)
+* ![](https://img.shields.io/badge/MySQL-20232A?style=for-the-badge&logo=mysql)
 * ![](https://img.shields.io/badge/Bootstrap-20232A?style=for-the-badge&logo=bootstrap)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
